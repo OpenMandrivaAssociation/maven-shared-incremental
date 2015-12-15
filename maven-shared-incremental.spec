@@ -1,7 +1,8 @@
 %{?_javapackages_macros:%_javapackages_macros}
 Name:           maven-shared-incremental
 Version:        1.1
-Release:        5.1%{?dist}
+Release:        5.1
+Group:	Development/Java
 Summary:        Maven Incremental Build support utilities
 License:        ASL 2.0
 
@@ -11,7 +12,7 @@ BuildArch:      noarch
 
 BuildRequires:  maven-local
 
-BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
