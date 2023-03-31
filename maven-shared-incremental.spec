@@ -1,7 +1,7 @@
 %{?_javapackages_macros:%_javapackages_macros}
 Name:           maven-shared-incremental
 Version:        1.1
-Release:        5.2
+Release:        5.3
 Group:	Development/Java
 Summary:        Maven Incremental Build support utilities
 License:        ASL 2.0
