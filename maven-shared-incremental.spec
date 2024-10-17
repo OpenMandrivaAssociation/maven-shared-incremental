@@ -6,7 +6,7 @@ Group:	Development/Java
 Summary:        Maven Incremental Build support utilities
 License:        ASL 2.0
 
-URL:            http://maven.apache.org/shared/maven-shared-incremental/
+URL:            https://maven.apache.org/shared/maven-shared-incremental/
 Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
 BuildArch:      noarch
 
