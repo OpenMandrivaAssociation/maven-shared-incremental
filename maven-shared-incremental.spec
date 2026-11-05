@@ -9,18 +9,16 @@ License:        ASL 2.0
 URL:            https://maven.apache.org/shared/maven-shared-incremental/
 Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
 BuildArch:      noarch
+BuildRequires:	python
 # Literal, so the first rpmbuild -bs records them before sysjar is installed.
 BuildRequires:	maven
 BuildRequires:	java-current-devel
 BuildSystem:	maven
 
 
-BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
-BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
-BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-api)
+BuildRequires:  maven-shared
+BuildRequires:  maven-shared-utils
+BuildRequires:  maven-components
 
 %description
 Various utility classes and plexus components for supporting
@@ -39,6 +37,30 @@ This package provides %{summary}.
 %endif
 %prep
 %setup -q
+# The sources do not import plexus-component-api or the component annotations.
+python - <<'PY'
+import xml.etree.ElementTree as ET
+NS = "http://maven.apache.org/POM/4.0.0"
+ET.register_namespace("", NS)
+
+def local(tag):
+    return tag.split("}", 1)[-1]
+
+tree = ET.parse("pom.xml")
+root = tree.getroot()
+drop = {"plexus-component-api", "plexus-component-annotations", "plexus-component-metadata"}
+for parent in root.iter():
+    for node in list(parent):
+        if local(node.tag) not in {"dependency", "plugin"}:
+            continue
+        artifact = ""
+        for child in node:
+            if local(child.tag) == "artifactId":
+                artifact = (child.text or "").strip()
+        if artifact in drop:
+            parent.remove(node)
+tree.write("pom.xml", encoding="utf-8", xml_declaration=True)
+PY
 
 %files -f .mfiles
 %doc LICENSE NOTICE
