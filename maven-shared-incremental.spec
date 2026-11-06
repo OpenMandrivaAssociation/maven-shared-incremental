@@ -19,6 +19,9 @@ BuildSystem:	maven
 BuildRequires:  maven-shared
 BuildRequires:  maven-shared-utils
 BuildRequires:  maven-components
+BuildRequires:	mvn(com.google.inject:guice-parent:pom::)
+BuildRequires:	mvn(org.slf4j:slf4j-parent:pom::)
+BuildRequires:	mvn(org.codehaus.plexus:plexus-containers:pom::)
 
 %description
 Various utility classes and plexus components for supporting
